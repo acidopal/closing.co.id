@@ -10,6 +10,12 @@ RUN bun install --frozen-lockfile --ignore-scripts \
 	&& ln -s /app/node_modules /app/apps/backend/node_modules
 
 FROM deps AS build
+ARG VITE_API_URL=https://api.closing.co.id
+ARG VITE_SOCKET_URL=https://api.closing.co.id
+ARG VITE_N8N_URL=
+ENV VITE_API_URL=${VITE_API_URL}
+ENV VITE_SOCKET_URL=${VITE_SOCKET_URL}
+ENV VITE_N8N_URL=${VITE_N8N_URL}
 RUN cd apps/frontend && rm -rf .output dist .tanstack && bun run build
 
 FROM node:22-alpine AS runtime

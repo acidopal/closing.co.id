@@ -1,19 +1,11 @@
-name: Rollback Scalebiz (Helm via SSH)
+name: Rollback closing.co.id
 
 on:
   workflow_dispatch:
     inputs:
-      revision:
-        description: Helm revision number to rollback to
+      ref:
+        description: Git ref, tag, or commit SHA to deploy
         required: true
-      namespace:
-        description: Kubernetes namespace
-        required: false
-        default: scalebiz
-      release:
-        description: Helm release name
-        required: false
-        default: scalebiz
 
 permissions:
   contents: read
@@ -39,32 +31,7 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Rollback release on server
-        env:
-          SSH_SUDO_PASSWORD: ${{ secrets.SSH_SUDO_PASSWORD }}
+      - name: Deploy requested ref
         run: |
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
-            "REVISION='${{ inputs.revision }}' NAMESPACE='${{ inputs.namespace }}' RELEASE='${{ inputs.release }}' SSH_SUDO_PASSWORD='${SSH_SUDO_PASSWORD}' bash -s" <<'REMOTE'
-          set -euo pipefail
-
-          run_sudo() {
-            if sudo -n true 2>/dev/null; then
-              sudo "$@"
-              return
-            fi
-
-            if [ -n "${SSH_SUDO_PASSWORD:-}" ]; then
-              printf '%s\n' "$SSH_SUDO_PASSWORD" | sudo -S "$@"
-              return
-            fi
-
-            echo "Passwordless sudo unavailable and SSH_SUDO_PASSWORD is not set"
-            exit 1
-          }
-
-          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm -n "${NAMESPACE}" rollback "${RELEASE}" "${REVISION}"
-          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-api --timeout=300s
-          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-frontend --timeout=300s
-          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-worker --timeout=300s
-          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-scheduler --timeout=300s
-          REMOTE
+            "APP_DIR='/opt/closing.co.id' DEPLOY_REF='${{ inputs.ref }}' IMAGE_TAG='rollback-${{ github.run_id }}' bash /opt/closing.co.id/deploy/scripts/vps-docker-deploy.sh"

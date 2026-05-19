@@ -1,0 +1,104 @@
+name: closing
+
+x-backend-env: &backend-env
+  env_file:
+    - ../.env.production.local
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg15
+    restart: unless-stopped
+    env_file:
+      - ../.env.production.local
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-scalechat}
+      POSTGRES_USER: ${POSTGRES_USER:-scalechat}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend-api:
+    <<: *backend-env
+    image: closing-backend:${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: apps/backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_MODE: api
+    ports:
+      - "127.0.0.1:3010:3010"
+      - "127.0.0.1:3011:3011"
+
+  backend-worker:
+    <<: *backend-env
+    image: closing-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      APP_MODE: worker
+
+  backend-scheduler:
+    <<: *backend-env
+    image: closing-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      APP_MODE: scheduler
+
+  migrate:
+    <<: *backend-env
+    image: closing-backend:${IMAGE_TAG:-latest}
+    profiles: ["tools"]
+    restart: "no"
+    environment:
+      APP_MODE: migrate
+    command: ["bunx", "prisma", "migrate", "deploy"]
+    working_dir: /app/apps/backend
+
+  frontend:
+    image: closing-frontend:${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-https://api.closing.co.id}
+        VITE_SOCKET_URL: ${VITE_SOCKET_URL:-https://api.closing.co.id}
+        VITE_N8N_URL: ${VITE_N8N_URL:-}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "80"
+    ports:
+      - "127.0.0.1:3005:80"
+    depends_on:
+      backend-api:
+        condition: service_started
+
+volumes:
+  postgres_data:
+  redis_data:
