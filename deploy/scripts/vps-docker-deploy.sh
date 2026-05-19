@@ -19,7 +19,7 @@ git checkout --force "${DEPLOY_REF}"
 
 export IMAGE_TAG
 
-docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" build --pull backend-api frontend
+docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" build backend-api frontend
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d postgres redis
 
 if [ "${RUN_PRISMA_MIGRATE:-false}" = "true" ]; then
