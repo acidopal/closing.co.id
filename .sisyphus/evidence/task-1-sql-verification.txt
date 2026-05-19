@@ -1,0 +1,27 @@
+-- organization credit columns
+         column_name         | data_type | is_nullable | column_default 
+-----------------------------+-----------+-------------+----------------
+ ai_credit_warning_threshold | numeric   | YES         | 5.0
+ ai_credits                  | numeric   | YES         | 0.0
+ ai_low_credit_alert_sent    | boolean   | YES         | false
+(3 rows)
+
+-- payment_requests table existence
+    table_name    
+------------------
+ payment_requests
+(1 row)
+
+-- payment_requests columns
+    column_name    |        data_type         | is_nullable |        column_default        
+-------------------+--------------------------+-------------+------------------------------
+ id                | uuid                     | NO          | gen_random_uuid()
+ org_id            | text                     | NO          | 
+ external_id       | character varying        | YES         | 
+ xendit_invoice_id | character varying        | YES         | 
+ amount            | numeric                  | NO          | 
+ credits           | numeric                  | NO          | 
+ status            | character varying        | NO          | 'pending'::character varying
+ created_at        | timestamp with time zone | NO          | now()
+ updated_at        | timestamp with time zone | NO          | now()
+(9 rows)

@@ -1,0 +1,259 @@
+name: Deploy Scalebiz (SSH + K3s)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scalebiz-production
+  cancel-in-progress: false
+
+env:
+  RELEASE: scalebiz
+  NAMESPACE: scalebiz
+  IMAGE_TAG: ${{ github.sha }}
+  APP_HOST: app.scalebiz.chat
+  API_HOST: api.scalebiz.chat
+  FRONTEND_ORIGIN: https://app.scalebiz.chat
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.15
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate Prisma client
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        run: bun run --filter backend db:generate
+
+      - name: Build backend
+        run: bun run build:backend
+
+      - name: Build frontend
+        run: bun run build:frontend
+
+  docker:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.15
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate Prisma client
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        run: bun run --filter backend db:generate
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image archive
+        run: |
+          docker build -t scalebiz-backend:${IMAGE_TAG} -f ./apps/backend/Dockerfile .
+          docker save scalebiz-backend:${IMAGE_TAG} | gzip -1 > scalebiz-backend-${IMAGE_TAG}.tar.gz
+
+      - name: Build frontend image archive
+        run: |
+          docker build -t scalebiz-frontend:${IMAGE_TAG} -f ./apps/frontend/Dockerfile .
+          docker save scalebiz-frontend:${IMAGE_TAG} | gzip -1 > scalebiz-frontend-${IMAGE_TAG}.tar.gz
+
+      - name: Upload docker image artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images-${{ github.sha }}
+          path: |
+            scalebiz-backend-${{ github.sha }}.tar.gz
+            scalebiz-frontend-${{ github.sha }}.tar.gz
+          retention-days: 1
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    environment: Dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download docker image artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-images-${{ github.sha }}
+          path: ./artifacts
+
+      - name: Ensure SSH secrets exist
+        run: |
+          test -n "${{ secrets.SSH_HOST }}" || (echo "Missing secret SSH_HOST" && exit 1)
+          test -n "${{ secrets.SSH_USER }}" || (echo "Missing secret SSH_USER" && exit 1)
+          test -n "${{ secrets.SSH_PRIVATE_KEY }}" || (echo "Missing secret SSH_PRIVATE_KEY" && exit 1)
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Trust SSH host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Ensure remote workspace exists
+        run: |
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" "mkdir -p /home/${{ secrets.SSH_USER }}/scalebiz"
+
+      - name: Sync deployment manifests to server
+        run: |
+          rsync -az --delete ./deploy/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/scalebiz/deploy/"
+
+      - name: Upload image archives to server
+        run: |
+          scp ./artifacts/scalebiz-backend-${{ github.sha }}.tar.gz "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/"
+          scp ./artifacts/scalebiz-frontend-${{ github.sha }}.tar.gz "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/"
+
+      - name: Import images and deploy via Helm (atomic)
+        env:
+          SSH_SUDO_PASSWORD: ${{ secrets.SSH_SUDO_PASSWORD }}
+        run: |
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "IMAGE_TAG='${{ github.sha }}' RELEASE='${{ env.RELEASE }}' NAMESPACE='${{ env.NAMESPACE }}' REMOTE_DIR='/home/${{ secrets.SSH_USER }}/scalebiz' SSH_SUDO_PASSWORD='${SSH_SUDO_PASSWORD}' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          run_sudo() {
+            if sudo -n true 2>/dev/null; then
+              sudo "$@"
+              return
+            fi
+
+            if [ -n "${SSH_SUDO_PASSWORD:-}" ]; then
+              printf '%s\n' "$SSH_SUDO_PASSWORD" | sudo -S "$@"
+              return
+            fi
+
+            echo "Passwordless sudo unavailable and SSH_SUDO_PASSWORD is not set"
+            exit 1
+          }
+
+          run_sudo k3s ctr images import "/tmp/scalebiz-backend-${IMAGE_TAG}.tar.gz"
+          run_sudo k3s ctr images import "/tmp/scalebiz-frontend-${IMAGE_TAG}.tar.gz"
+
+          if run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" get deployment "${RELEASE}-scheduler" >/dev/null 2>&1; then
+            current_scheduler_strategy="$(run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" get deployment "${RELEASE}-scheduler" -o jsonpath='{.spec.strategy.type}' || true)"
+            if [ "${current_scheduler_strategy}" = "RollingUpdate" ]; then
+              run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" patch deployment "${RELEASE}-scheduler" \
+                --type='json' \
+                -p='[{"op":"replace","path":"/spec/strategy","value":{"type":"Recreate"}}]'
+            fi
+          fi
+
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm upgrade --install "${RELEASE}" "${REMOTE_DIR}/deploy/helm/scalebiz" \
+            --namespace "${NAMESPACE}" \
+            --create-namespace \
+            --atomic \
+            --wait \
+            --timeout 10m \
+            --history-max 20 \
+            -f "${REMOTE_DIR}/deploy/helm/scalebiz/values.yaml" \
+            -f "${REMOTE_DIR}/deploy/helm/scalebiz/values-production.yaml" \
+            --set api.image.repository=scalebiz-backend \
+            --set api.image.tag="${IMAGE_TAG}" \
+            --set worker.image.repository=scalebiz-backend \
+            --set worker.image.tag="${IMAGE_TAG}" \
+            --set scheduler.image.repository=scalebiz-backend \
+            --set scheduler.image.tag="${IMAGE_TAG}" \
+            --set frontend.image.repository=scalebiz-frontend \
+            --set frontend.image.tag="${IMAGE_TAG}"
+
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-api --timeout=300s
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-frontend --timeout=300s
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-worker --timeout=300s
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" rollout status deployment/"${RELEASE}"-scheduler --timeout=300s
+
+          run_sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl -n "${NAMESPACE}" get pods
+          run_sudo rm -f "/tmp/scalebiz-backend-${IMAGE_TAG}.tar.gz" "/tmp/scalebiz-frontend-${IMAGE_TAG}.tar.gz"
+          REMOTE
+
+      - name: Post-deploy smoke checks
+        run: |
+          set -euo pipefail
+
+          echo "Smoke check: API health"
+          curl -fsS --retry 5 --retry-delay 2 --retry-connrefused "https://${API_HOST}/health" >/dev/null
+
+          echo "Smoke check: Frontend login page"
+          curl -fsSL --retry 5 --retry-delay 2 --retry-connrefused "https://${APP_HOST}/login" >/dev/null
+
+          echo "Smoke check: Socket.IO websocket handshake"
+          node <<'NODE'
+          const crypto = require("node:crypto");
+          const https = require("node:https");
+
+          const host = process.env.API_HOST;
+          const origin = process.env.FRONTEND_ORIGIN;
+          const socketPath = "/socket.io/?EIO=4&transport=websocket";
+          const key = crypto.randomBytes(16).toString("base64");
+          const expectedAccept = crypto
+            .createHash("sha1")
+            .update(`${key}258EAFA5-E914-47DA-95CA-C5AB0DC85B11`)
+            .digest("base64");
+
+          const req = https.request({
+            host,
+            port: 443,
+            method: "GET",
+            path: socketPath,
+            headers: {
+              Connection: "Upgrade",
+              Upgrade: "websocket",
+              "Sec-WebSocket-Key": key,
+              "Sec-WebSocket-Version": "13",
+              Origin: origin,
+            },
+            timeout: 10000,
+          });
+
+          req.on("upgrade", (res, socket) => {
+            const accept = res.headers["sec-websocket-accept"];
+            if (res.statusCode !== 101 || accept !== expectedAccept) {
+              console.error(`Unexpected websocket handshake: status=${res.statusCode}, accept=${accept}`);
+              socket.destroy();
+              process.exit(1);
+            }
+            socket.destroy();
+            console.log("Socket.IO websocket handshake OK");
+            process.exit(0);
+          });
+
+          req.on("response", (res) => {
+            console.error(`Expected HTTP 101 upgrade, received ${res.statusCode}`);
+            process.exit(1);
+          });
+
+          req.on("timeout", () => {
+            req.destroy(new Error("websocket handshake timeout"));
+          });
+
+          req.on("error", (error) => {
+            console.error(`Websocket smoke check failed: ${error.message}`);
+            process.exit(1);
+          });
+
+          req.end();
+          NODE

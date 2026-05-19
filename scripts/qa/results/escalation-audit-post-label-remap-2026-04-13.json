@@ -1,0 +1,121 @@
+{
+  "args": {
+    "channelId": "ea1bae74-a82f-4f99-a0a8-981b61c0a2e1",
+    "chatbotId": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+    "json": true
+  },
+  "snapshot": {
+    "checked_at": "2026-04-13T01:56:00.270Z",
+    "channel": {
+      "id": "ea1bae74-a82f-4f99-a0a8-981b61c0a2e1",
+      "name": "InKanteen",
+      "app_id": "4522bdf9-9447-44d7-a470-72211bb00f93"
+    },
+    "inbox": {
+      "id": "07b74c76-10bb-484e-ba9d-006d49616d30",
+      "name": "WA: InKanteen",
+      "app_id": "4522bdf9-9447-44d7-a470-72211bb00f93"
+    },
+    "chatbot": {
+      "id": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+      "name": "New Sales Migration (vKR)",
+      "app_id": "4522bdf9-9447-44d7-a470-72211bb00f93"
+    },
+    "resolved_defaults": {
+      "default_flow_id": "de838c5e-ffb7-4ad2-87db-d982a4dfbafd",
+      "default_chatbot_id": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+      "default_team_ids": [
+        "f0e54088-e286-40e1-809a-1b8b40f0a929"
+      ],
+      "default_agent_ids": [
+        "d05bd2d2-641a-4234-9dae-68e6af2db3d5",
+        "ff1e6640-5c06-4756-bf15-22b6bc9c82a5",
+        "99666850-5cff-40c4-b0f9-6f665e47642c"
+      ],
+      "distribution_method": "round_robin"
+    }
+  },
+  "checks": [
+    {
+      "id": "distribution.sync",
+      "status": "pass",
+      "message": "Distribution method is synced",
+      "details": {
+        "distribution_method": "round_robin"
+      }
+    },
+    {
+      "id": "distribution.mode",
+      "status": "pass",
+      "message": "Assignment mode is Round Robin"
+    },
+    {
+      "id": "chatbot.binding",
+      "status": "pass",
+      "message": "Inbox default chatbot matches target AI agent"
+    },
+    {
+      "id": "agent_transfer.length",
+      "status": "pass",
+      "message": "Agent transfer prompt within UI limit",
+      "details": {
+        "length": 744,
+        "max": 750
+      }
+    },
+    {
+      "id": "handoff.flags",
+      "status": "pass",
+      "message": "Silent handoff and stop-after-handoff are enabled"
+    },
+    {
+      "id": "tool.location",
+      "status": "pass",
+      "message": "get_location_branch is active"
+    },
+    {
+      "id": "flow.summary",
+      "status": "pass",
+      "message": "Loaded active default flow",
+      "details": {
+        "flow_id": "de838c5e-ffb7-4ad2-87db-d982a4dfbafd",
+        "flow_name": "[Sozo] - Before&After Sales",
+        "active": true,
+        "node_count": 30,
+        "human_end_nodes": 3,
+        "label_action_nodes": 3
+      }
+    },
+    {
+      "id": "flow.labels",
+      "status": "pass",
+      "message": "All flow label IDs resolve in current app"
+    },
+    {
+      "id": "team.exists",
+      "status": "pass",
+      "message": "All default teams exist"
+    },
+    {
+      "id": "team.membership",
+      "status": "pass",
+      "message": "Default agents are members of default teams"
+    },
+    {
+      "id": "agents.valid",
+      "status": "pass",
+      "message": "All default agents are active and valid"
+    },
+    {
+      "id": "round_robin.seed",
+      "status": "pass",
+      "message": "agent_availability rows exist for all default agents"
+    }
+  ],
+  "summary": {
+    "pass": 12,
+    "warn": 0,
+    "fail": 0,
+    "overall": "pass"
+  }
+}

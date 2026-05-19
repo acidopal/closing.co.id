@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Prisma Generate on Schema Change",
+  "description": "Regenerate Prisma client when schema.prisma is modified",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "apps/backend/prisma/schema.prisma"
+    ]
+  },
+  "steps": [
+    {
+      "command": "bun run db:generate",
+      "description": "Regenerate Prisma client types"
+    }
+  ]
+}

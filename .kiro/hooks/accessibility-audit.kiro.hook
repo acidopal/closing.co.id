@@ -1,0 +1,18 @@
+{
+  "enabled": false,
+  "name": "Accessibility Audit",
+  "description": "Check React components for accessibility issues (enable when needed)",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "apps/frontend/src/components/**/*.tsx",
+      "apps/frontend/src/routes/**/*.tsx"
+    ]
+  },
+  "steps": [
+    {
+      "command": "echo 'Check: aria labels, keyboard nav, semantic HTML, color contrast, focus management'",
+      "description": "Accessibility checklist"
+    }
+  ]
+}

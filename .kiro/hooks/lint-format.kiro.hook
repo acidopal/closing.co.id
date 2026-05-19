@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Lint and Format on Save",
+  "description": "Auto-format and lint with Biome when code files are saved",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "apps/**/*.{ts,tsx,js,jsx}"
+    ]
+  },
+  "steps": [
+    {
+      "command": "bunx biome check --write ${filePath}",
+      "description": "Format and lint with Biome"
+    }
+  ]
+}

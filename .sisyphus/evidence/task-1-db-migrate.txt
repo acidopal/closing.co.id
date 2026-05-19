@@ -1,0 +1,16 @@
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+Datasource "db": PostgreSQL database "scalechat", schema "public" at "43.133.150.94:5432"
+
+2 migrations found in prisma/migrations
+
+Applying migration `20260409131352_org_credits`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260409131352_org_credits/
+    └─ migration.sql
+
+All migrations have been successfully applied.

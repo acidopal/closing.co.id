@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Validate Docker on Change",
+  "description": "Check Dockerfile for best practices when modified",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/Dockerfile*",
+      "**/docker-compose*.yml"
+    ]
+  },
+  "steps": [
+    {
+      "command": "echo 'Review: non-root user, multi-stage build, no secrets in build args, pinned versions'",
+      "description": "Docker best practices reminder"
+    }
+  ]
+}

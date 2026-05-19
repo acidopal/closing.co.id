@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "scope": "sozo_before_after_sales",
+  "inbox": {
+    "channel_id": "ea1bae74-a82f-4f99-a0a8-981b61c0a2e1",
+    "inbox_id": "07b74c76-10bb-484e-ba9d-006d49616d30",
+    "chatbot_id": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+    "distribution_method": "round_robin"
+  },
+  "reference_tool_shapes": {
+    "intent_labeling": {
+      "tool_name": "label_conversation",
+      "required_arguments": {
+        "label": "string"
+      },
+      "forbidden_arguments": [
+        "reason",
+        "division",
+        "location"
+      ],
+      "examples": [
+        { "label": "Promo/price" },
+        { "label": "Potential Booking" },
+        { "label": "Schedule" },
+        { "label": "treatment/concerns" }
+      ]
+    },
+    "branch_lookup": {
+      "tool_name": "get_location_branch",
+      "required_arguments": {
+        "location": "string"
+      },
+      "forbidden_arguments": [
+        "label",
+        "reason",
+        "division"
+      ],
+      "examples": [
+        { "location": "Bogor" }
+      ]
+    },
+    "escalation_to_human": {
+      "tool_name": "handoff_to_human",
+      "required_arguments": {
+        "reason": "string",
+        "division": "string"
+      },
+      "forbidden_arguments": [
+        "label",
+        "location"
+      ],
+      "examples": [
+        {
+          "reason": "Customer meminta booking pada hari Selasa ini di cabang Bintaro",
+          "division": "Malla Teams"
+        }
+      ]
+    }
+  },
+  "observed_from_conversation_sample": {
+    "intent_labeling": {
+      "executed": true,
+      "tool_calls": [
+        {
+          "name": "label_conversation",
+          "arguments": { "label": "Promo/price" }
+        },
+        {
+          "name": "label_conversation",
+          "arguments": { "label": "treatment/concerns" }
+        },
+        {
+          "name": "label_conversation",
+          "arguments": { "label": "Potential Booking" }
+        },
+        {
+          "name": "label_conversation",
+          "arguments": { "label": "Schedule" }
+        }
+      ]
+    },
+    "branch_lookup": {
+      "executed": true,
+      "tool_calls": [
+        {
+          "name": "get_location_branch",
+          "arguments": { "location": "Bogor" }
+        }
+      ]
+    },
+    "escalation_to_human": {
+      "executed": true,
+      "tool_calls": [
+        {
+          "name": "handoff_to_human",
+          "arguments": {
+            "reason": "Customer meminta booking pada hari Selasa ini di cabang Bintaro",
+            "division": "Malla Teams"
+          }
+        }
+      ]
+    }
+  },
+  "legacy_flow_label_gap": {
+    "remap_applied": true,
+    "applied_at": "2026-04-13",
+    "missing_label_ids": [
+      "44d42190-742c-4657-aedb-dc426c60397d",
+      "b94f94e9-bfed-40f6-ad87-50a46c807d3d",
+      "b4c92f08-4b2c-4c36-9c66-1439671bebe9"
+    ],
+    "candidate_mapping": [
+      {
+        "legacy_label_id": "44d42190-742c-4657-aedb-dc426c60397d",
+        "suggested_active_label_id": "422846c5-4466-4ed9-a401-852cd77c09d2",
+        "suggested_active_label_title": "Promo / Price",
+        "confidence": "high"
+      },
+      {
+        "legacy_label_id": "b4c92f08-4b2c-4c36-9c66-1439671bebe9",
+        "suggested_active_label_id": "870ab050-c6e9-45cf-90e6-4f8ad72c4189",
+        "suggested_active_label_title": "Existing Customer",
+        "confidence": "medium"
+      },
+      {
+        "legacy_label_id": "b94f94e9-bfed-40f6-ad87-50a46c807d3d",
+        "suggested_active_label_id": "9553b593-aeff-42c0-af2e-6c2dabf98280",
+        "suggested_active_label_title": "Ads",
+        "confidence": "medium"
+      }
+    ],
+    "note": "Mapping has been applied to active flow nodes. Audit now reports flow.labels=pass."
+  }
+}

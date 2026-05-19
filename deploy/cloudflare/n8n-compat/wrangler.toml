@@ -1,0 +1,23 @@
+name = "scalebiz-n8n-compat"
+main = "worker.js"
+compatibility_date = "2026-04-16"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "scalebiz"
+database_id = "40354a1a-aaa0-4cf2-bba5-fffa71dc47f4"
+
+[[d1_databases]]
+binding = "DB_S1"
+database_name = "scalebiz-shard-1"
+database_id = "f6fb26ea-5181-4b79-9a7e-cc61065b7442"
+
+[[d1_databases]]
+binding = "DB_S2"
+database_name = "scalebiz-shard-2"
+database_id = "fd01bdea-fdce-40fb-99ce-1c340c07bd9c"
+
+[[d1_databases]]
+binding = "DB_S3"
+database_name = "scalebiz-shard-3"
+database_id = "d6e94122-ad6d-46ff-a98c-c9e3e3adaa35"

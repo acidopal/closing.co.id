@@ -1,0 +1,138 @@
+{
+  "testRunId": "escalation-smoke-1776045820338",
+  "testWaId": "628000045820338",
+  "target": {
+    "channel_id": "ea1bae74-a82f-4f99-a0a8-981b61c0a2e1",
+    "chatbot_id": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+    "app_id": "4522bdf9-9447-44d7-a470-72211bb00f93",
+    "inbox_id": "07b74c76-10bb-484e-ba9d-006d49616d30",
+    "phone_number_id": "814791358387401"
+  },
+  "chatbot_flags": {
+    "is_silent_handoff_agent": true,
+    "stop_after_handoff": true,
+    "agent_transfer_length": 744
+  },
+  "inbound_results": [
+    {
+      "stepId": "escalation-smoke-1776045820338-01",
+      "success": true,
+      "errors": []
+    },
+    {
+      "stepId": "escalation-smoke-1776045820338-02",
+      "success": true,
+      "errors": []
+    },
+    {
+      "stepId": "escalation-smoke-1776045820338-03",
+      "success": true,
+      "errors": []
+    }
+  ],
+  "contact": {
+    "id": "5535e08b-b867-49e7-ad88-106e53cc52f8",
+    "name": "Smoke Test escalation-smoke-1776045820338",
+    "whatsapp_id": "628000045820338",
+    "created_at": "2026-04-13T02:03:40.000Z",
+    "updated_at": "2026-04-13T02:04:04.793Z"
+  },
+  "conversation": {
+    "id": "cb27fd1f-b507-4474-aea6-fe567db27806",
+    "status": "open",
+    "assignee_id": null,
+    "team_id": null,
+    "unread_count": 3,
+    "updated_at": "2026-04-13T02:04:04.924Z",
+    "created_at": "2026-04-13T02:03:40.000Z"
+  },
+  "active_agents": [],
+  "assignment_history": [],
+  "status_checks": {
+    "conversation_pending": false,
+    "has_assignee": false,
+    "has_active_agent_row": false,
+    "has_tool_status_messages": true,
+    "has_handoff_hint_message": false
+  },
+  "system_messages": [
+    "Successfully labeled conversation with: Promo / Price"
+  ],
+  "tool_status_messages": [
+    "Successfully labeled conversation with: Promo / Price"
+  ],
+  "recent_messages": [
+    {
+      "id": "3a57bf4f-d94c-4380-814c-39d896c4c694",
+      "sender_type": "contact",
+      "content_type": "text",
+      "status": "sent",
+      "created_at": "2026-04-13T02:03:40.000Z",
+      "content": "Halo SOZO, saya tertarik promo IPL Glow 199rb"
+    },
+    {
+      "id": "89afd623-329f-4ac7-ba59-5be045194744",
+      "sender_type": "contact",
+      "content_type": "text",
+      "status": "sent",
+      "created_at": "2026-04-13T02:03:41.000Z",
+      "content": "Bogor"
+    },
+    {
+      "id": "1ced8c54-04d8-4dac-abad-de0cefeb70e8",
+      "sender_type": "contact",
+      "content_type": "text",
+      "status": "sent",
+      "created_at": "2026-04-13T02:03:42.000Z",
+      "content": "hari selasa ini di cabang Bintaro"
+    },
+    {
+      "id": "5bd8b94e-680d-4567-8962-3e04a37983e2",
+      "sender_type": "system",
+      "content_type": "text",
+      "status": "sent",
+      "created_at": "2026-04-13T02:03:55.193Z",
+      "content": "Successfully labeled conversation with: Promo / Price"
+    },
+    {
+      "id": "06dc0a1e-17bd-445d-a933-c2389b4d704b",
+      "sender_type": "bot",
+      "content_type": "text",
+      "status": "failed",
+      "created_at": "2026-04-13T02:03:55.194Z",
+      "content": "Halo Kak🤍 Aku SOPHIA dari SOZO Skin Clinic."
+    },
+    {
+      "id": "371f8a9c-fc1f-4780-bd7d-3492e9fbde6d",
+      "sender_type": "bot",
+      "content_type": "text",
+      "status": "failed",
+      "created_at": "2026-04-13T02:03:55.195Z",
+      "content": "IPL Glow adalah perawatan yang menggunakan teknologi cahaya untuk membantu mencerahkan kulit, mengurangi noda hitam, dan meremajakan kulit agar tampak lebih sehat. Perawatan ini cocok untuk berbagai jenis kulit dan dapat memberikan hasil yang lebih cerah dan merata."
+    },
+    {
+      "id": "62d3180a-c2e2-4197-b33e-1c1e4235871d",
+      "sender_type": "bot",
+      "content_type": "text",
+      "status": "failed",
+      "created_at": "2026-04-13T02:03:55.196Z",
+      "content": "Berikut detail harganya ya Kak:"
+    },
+    {
+      "id": "6dd07a07-a372-4448-9d4f-3175cae40766",
+      "sender_type": "bot",
+      "content_type": "image",
+      "status": "failed",
+      "created_at": "2026-04-13T02:03:55.197Z",
+      "content": "https://files.cekat.ai/IPL_Glow_-_Flash_sale_QlMdWS.png"
+    },
+    {
+      "id": "a8c0aa90-6cae-4477-9ed2-69b387f70392",
+      "sender_type": "bot",
+      "content_type": "text",
+      "status": "pending",
+      "created_at": "2026-04-13T02:03:55.198Z",
+      "content": "Kalau boleh tahu, Kakak berdomisili di mana? Nanti saya bantu carikan cabang terde"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+bun run build:frontend
+- Warning: Route file "./developers/_model.ts" does not export a Route (expected for shared model file).
+- Build completed successfully despite warning; client, SSR, and Nitro bundles were all generated.

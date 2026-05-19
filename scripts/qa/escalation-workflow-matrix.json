@@ -1,0 +1,95 @@
+{
+  "name": "Escalation Workflow Matrix",
+  "version": "1.0.0",
+  "channel_id": "ea1bae74-a82f-4f99-a0a8-981b61c0a2e1",
+  "chatbot_id": "1c444e9f-f06c-4fe1-b1b7-7ddb35a6f1b9",
+  "cases": [
+    {
+      "id": "WF-001",
+      "input": "Halo SOZO, saya tertarik promo IPL Glow 199rb",
+      "expected_tools": ["label_conversation"],
+      "expected_labels": ["Promo / Price"],
+      "expected_handoff": false,
+      "expected_status": "open"
+    },
+    {
+      "id": "WF-002",
+      "input": "Bogor",
+      "precondition": "Assistant asked domisili/lokasi in previous turn",
+      "expected_tools": ["get_location_branch"],
+      "expected_handoff": false,
+      "expected_status": "open"
+    },
+    {
+      "id": "WF-003",
+      "input": "hari selasa jam 3 di cabang Bintaro",
+      "expected_tools": ["label_conversation", "handoff_to_human"],
+      "expected_labels": ["Schedule"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-004",
+      "input": "aku mau reschedule appointment kak",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-005",
+      "input": "bisa sambungin ke admin?",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-006",
+      "input": "saya hamil, treatment ini aman?",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-007",
+      "input": "kok belum dihubungi, kecewa banget",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-008",
+      "input": "saya pernah treatment di SOZO",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-009",
+      "input": "voucher 150k bisa dipakai ga?",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-010",
+      "input": "claim promo",
+      "expected_tools": ["label_conversation"],
+      "expected_handoff": false,
+      "expected_status": "open"
+    },
+    {
+      "id": "WF-011",
+      "input": "weekend ada slot?",
+      "expected_tools": ["handoff_to_human"],
+      "expected_handoff": true,
+      "expected_status": "pending"
+    },
+    {
+      "id": "WF-012",
+      "input": "alamat cabang terdekat dari Cibubur",
+      "expected_tools": ["get_location_branch"],
+      "expected_handoff": false,
+      "expected_status": "open"
+    }
+  ]
+}
