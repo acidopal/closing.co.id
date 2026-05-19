@@ -21,7 +21,13 @@ export IMAGE_TAG
 
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" build --pull backend-api frontend
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d postgres redis
-docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" run --rm migrate
+
+if [ "${RUN_PRISMA_MIGRATE:-false}" = "true" ]; then
+  docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" run --rm migrate
+else
+  echo "Skipping Prisma migrate deploy (set RUN_PRISMA_MIGRATE=true to enable)."
+fi
+
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" up -d --remove-orphans backend-api backend-worker backend-scheduler frontend
 
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE_FILE}" ps
