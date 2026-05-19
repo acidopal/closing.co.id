@@ -62,6 +62,8 @@ services:
     restart: unless-stopped
     environment:
       APP_MODE: worker
+    healthcheck:
+      disable: true
 
   backend-scheduler:
     <<: *backend-env
@@ -69,6 +71,8 @@ services:
     restart: unless-stopped
     environment:
       APP_MODE: scheduler
+    healthcheck:
+      disable: true
 
   migrate:
     <<: *backend-env
@@ -77,6 +81,8 @@ services:
     restart: "no"
     environment:
       APP_MODE: migrate
+    healthcheck:
+      disable: true
     command: ["bunx", "prisma", "migrate", "deploy"]
     working_dir: /app/apps/backend
 
