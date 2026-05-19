@@ -83,7 +83,7 @@ function RegisterPage() {
 			<div className="mx-auto w-full max-w-md space-y-8 px-4 py-12 sm:px-6 lg:px-8">
 				<div className="flex flex-col items-center justify-center space-y-3">
 					<div className="text-center">
-						<h1 className="text-2xl font-bold tracking-tight">ScaleChat</h1>
+						<h1 className="text-2xl font-bold tracking-tight">Closing AI</h1>
 						<p className="text-muted-foreground mt-1 text-sm">
 							WhatsApp & Instagram Messaging Platform
 						</p>

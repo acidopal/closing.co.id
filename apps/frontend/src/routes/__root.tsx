@@ -36,12 +36,12 @@ export const Route = createRootRoute({
 				content: 'width=device-width, initial-scale=1',
 			},
 			{
-				title: 'ScaleChat - AI-Powered Agent Platform',
+				title: 'Closing AI - AI-Powered Agent Platform',
 			},
 			{
 				name: 'description',
 				content:
-					'ScaleChat - AI-powered customer engagement platform with Facebook integration',
+					'Closing AI - AI-powered customer engagement platform with Facebook integration',
 			},
 			{
 				property: 'og:type',
@@ -49,11 +49,11 @@ export const Route = createRootRoute({
 			},
 			{
 				property: 'og:url',
-				content: 'https://app.scalebiz.chat/',
+				content: 'https://app.closing.co.id/',
 			},
 			{
 				property: 'og:title',
-				content: 'ScaleChat - AI-Powered Agent Platform',
+				content: 'Closing AI - AI-Powered Agent Platform',
 			},
 			{
 				property: 'og:description',

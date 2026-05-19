@@ -626,7 +626,7 @@ function InstagramInbox() {
 	const [mobileView, setMobileView] = useState<'list' | 'chat'>('list')
 	const [showMobileCustomerInfo, setShowMobileCustomerInfo] = useState(false)
 
-	const API_BASE = import.meta.env.VITE_API_URL || 'https://api.scalebiz.chat'
+	const API_BASE = import.meta.env.VITE_API_URL || 'https://api.closing.co.id'
 
 	useEffect(() => {
 		selectedConversationIdRef.current = selectedConversation?.id || null
@@ -768,7 +768,7 @@ function InstagramInbox() {
 										incomingMessage.content || 'You have a new message',
 									)
 								}
-								document.title = '(1) New Message - ScaleChat'
+								document.title = '(1) New Message - Closing AI'
 							}
 
 							const exists = c.messages.some(

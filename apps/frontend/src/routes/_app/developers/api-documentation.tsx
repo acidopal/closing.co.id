@@ -26,7 +26,7 @@ function DevelopersApiDocumentationPage() {
 					data-testid="api-documentation-page-description"
 				>
 					Browse the available endpoints, request schemas, and example payloads
-					used by ScaleBiz.
+					used by Closing AI.
 				</p>
 			</header>
 

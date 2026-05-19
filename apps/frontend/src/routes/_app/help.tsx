@@ -113,7 +113,7 @@ function HelpPage() {
 														Email Support
 													</h3>
 													<p className='text-sm text-gray-500'>
-														support@scalechat.ai
+														support@closing.co.id
 													</p>
 													<button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors text-emerald-600 underline-offset-4 hover:underline h-auto p-0">
 														Send Email

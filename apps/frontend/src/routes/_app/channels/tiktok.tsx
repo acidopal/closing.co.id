@@ -496,7 +496,7 @@ function TikTokChannelsPage() {
 								</div>
 
 								<p className="text-sm text-gray-600">
-									Connect your TikTok account to send and receive direct messages from ScaleBiz inbox.
+									Connect your TikTok account to send and receive direct messages from Closing AI inbox.
 								</p>
 
 								<div className="rounded-lg border border-gray-200 bg-gray-50 p-5">

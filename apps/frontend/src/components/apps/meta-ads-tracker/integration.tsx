@@ -276,7 +276,7 @@ export default function IntegrationSettings() {
 						<div className="flex items-center gap-2 text-xs text-emerald-600 bg-emerald-50 p-3 rounded-lg border border-emerald-100">
 							<Info className="h-4 w-4" />
 							Use this webhook URL for Webhooks product in Meta App Dashboard.
-							Verify token is: scalechat_verify
+							Use the verify token configured for Meta webhooks.
 						</div>
 					</div>
 				</CardContent>

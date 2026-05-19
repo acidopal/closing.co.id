@@ -41,7 +41,7 @@ export const developersSubmenuItems: DevelopersSubmenuItem[] = [
 
 export const apiKeyAccordionContent = {
 	heading: 'Open API Access',
-	helperText: 'Copy this key to authenticate every ScaleBiz automation call.',
+	helperText: 'Copy this key to authenticate every Closing AI automation call.',
 	keyValue: '',
 	keyCopyTestId: 'api-keys-copy-primary',
 	docsLabel: 'View Postman Documentation',

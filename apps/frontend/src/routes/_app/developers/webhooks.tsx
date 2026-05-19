@@ -687,7 +687,7 @@ function DevelopersWebhooksPage() {
 										Events to notify: select the events you want to receive
 										notifications on your webhook.{' '}
 										<a
-											href="https://chat.scalebiz.ai/developers/webhooks"
+											href="https://app.closing.co.id/developers/webhooks"
 											target="_blank"
 											rel="noreferrer"
 											className="text-blue-600 underline transition-colors hover:text-blue-800"

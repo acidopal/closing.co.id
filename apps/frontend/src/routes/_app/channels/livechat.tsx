@@ -30,7 +30,7 @@ function LiveChatChannelPage() {
 						<div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
 							<MessageCircle className="text-white" size={18} />
 						</div>
-						<h1 className="text-2xl font-bold text-gray-900">ScaleChat Live</h1>
+						<h1 className="text-2xl font-bold text-gray-900">Closing AI Live</h1>
 					</div>
 					<div className="flex gap-4 border-b border-gray-200">
 						<button className="pb-3 px-1 font-medium text-sm text-gray-900 border-b-2 border-gray-900">
@@ -46,7 +46,7 @@ function LiveChatChannelPage() {
 				<div className="flex-1 overflow-y-auto p-6 pt-3">
 					<div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
 						<p className="text-sm text-gray-700">
-							Embed the ScaleChat widget on your website to chat with visitors
+							Embed the Closing AI widget on your website to chat with visitors
 							in real-time.
 						</p>
 					</div>
@@ -64,16 +64,16 @@ function LiveChatChannelPage() {
 
 						<div className="bg-gray-900 rounded-lg p-4 text-gray-300 font-mono text-sm overflow-x-auto">
 							<pre>{`<script>
-  window.scaleChatConfig = {
+  window.closingAIConfig = {
     appId: "${appId}"
   };
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "https://cdn.scalebiz.chat/widget.js";
+    js.src = "https://app.closing.co.id/widget.js";
     fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'scalechat-jssdk'));
+  }(document, 'script', 'closing-ai-jssdk'));
 </script>`}</pre>
 						</div>
 

@@ -102,7 +102,7 @@ function LoginPage() {
 							<span className="text-2xl font-bold">🚀</span>
 						</div>
 						<div>
-							<h1 className="text-2xl font-bold text-gray-900">ScaleChat</h1>
+							<h1 className="text-2xl font-bold text-gray-900">Closing AI</h1>
 							<p className="text-sm text-gray-500">
 								WhatsApp & Instagram Messaging Platform
 							</p>

@@ -52,7 +52,7 @@ function WhatsAppSuccessPage() {
 				</h1>
 				<p className="text-gray-600 mb-8">
 					Your WhatsApp Business Account has been successfully connected to
-					ScaleChat.
+					Closing AI.
 				</p>
 
 				<div className="bg-emerald-50 rounded-xl p-4 w-full flex items-center gap-4 mb-8">

@@ -1799,7 +1799,7 @@ function MyInbox() {
 		useState(false)
 
 	// API Configuration
-	const API_BASE = import.meta.env.VITE_API_URL || 'https://api.scalebiz.chat'
+	const API_BASE = import.meta.env.VITE_API_URL || 'https://api.closing.co.id'
 
 	// Filter States
 	const [channelFilter, setChannelFilter] = useState<
@@ -3114,7 +3114,7 @@ function MyInbox() {
 	useEffect(() => {
 		const handleVisibilityChange = () => {
 			if (!document.hidden) {
-				document.title = 'ScaleChat'
+				document.title = 'Closing AI'
 			}
 		}
 		document.addEventListener('visibilitychange', handleVisibilityChange)
@@ -3242,7 +3242,7 @@ function MyInbox() {
 						message.content || 'You have a new message',
 					)
 				}
-				document.title = '(1) New Message - ScaleChat'
+				document.title = '(1) New Message - Closing AI'
 			}
 
 			setConversations((prev) =>
@@ -6228,7 +6228,7 @@ function MyInbox() {
 												Contact you on channel
 											</p>
 											<p className="text-sm font-semibold text-gray-900">
-												{`${getChannelLabel(selectedConversation.channel)} - ScaleChat`}
+												{`${getChannelLabel(selectedConversation.channel)} - Closing AI`}
 											</p>
 										</div>
 										<div>

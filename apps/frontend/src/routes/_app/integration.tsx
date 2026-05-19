@@ -81,9 +81,9 @@ const channels = [
 	},
 	{
 		id: 'livechat',
-		name: 'ScaleChat Live',
+		name: 'Closing AI Live',
 		description:
-			'Engage customers in real time through a customizable and visually appealing ScaleChat Live on your website.',
+			'Engage customers in real time through a customizable and visually appealing Closing AI Live on your website.',
 		icon: MessageCircle,
 		color: 'bg-emerald-500',
 		category: ['all', 'livechat'],

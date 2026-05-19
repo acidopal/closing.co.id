@@ -313,7 +313,7 @@ export default function AIConfigurationManager() {
 							<div className="p-4 rounded-xl border border-emerald-100 bg-emerald-50/30 flex flex-col gap-3">
 								<div className="flex items-center justify-between">
 									<h4 className="text-sm font-black text-emerald-800 uppercase tracking-tighter">
-										ScaleChat Platform
+										Closing AI Platform
 									</h4>
 									<ShieldCheck size={18} className="text-emerald-500" />
 								</div>
@@ -464,7 +464,7 @@ export default function AIConfigurationManager() {
 										Optimal Performance Mode
 									</h4>
 									<p className="text-xs text-gray-500 max-w-sm mt-2">
-										ScaleChat manages all API traffic, fine-tuning, and rate
+										Closing AI manages all API traffic, fine-tuning, and rate
 										limits for you. No technical setup required.
 									</p>
 								</div>
@@ -490,7 +490,7 @@ export default function AIConfigurationManager() {
 				<CardContent className="p-6">
 					<textarea
 						className="w-full min-h-[120px] p-4 rounded-xl border border-gray-200 bg-gray-50 font-mono text-xs leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500 mb-4 transition-all"
-						placeholder="e.g. You are the official assistant for ScaleChat. Always maintain a professional yet approachable tone. Refer to customers by their first name if available."
+						placeholder="e.g. You are the official assistant for Closing AI. Always maintain a professional yet approachable tone. Refer to customers by their first name if available."
 					/>
 					<div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100 gap-4">
 						<div className="flex gap-3 items-center">
@@ -527,7 +527,7 @@ export default function AIConfigurationManager() {
 			<div className="flex items-center gap-2 text-gray-300 justify-center pb-8 pt-4">
 				<Sparkles size={14} className="animate-spin-slow" />
 				<p className="text-[10px] font-black uppercase tracking-[0.2em]">
-					ScaleChat Engine Core v2.4 • Active Model:{' '}
+					Closing AI Engine Core v2.4 • Active Model:{' '}
 					{settings?.model_name || 'GPT-4o'}
 				</p>
 			</div>

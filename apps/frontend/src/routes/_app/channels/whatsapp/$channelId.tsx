@@ -349,7 +349,7 @@ function WhatsAppChannelDetailPage() {
 								<div>
 									<h2 className="text-lg font-semibold">Channel Profile</h2>
 									<p className="text-sm text-gray-600">
-										Customize how this channel appears in ScaleChat
+										Customize how this channel appears in Closing AI
 									</p>
 								</div>
 								{!isEditing ? (

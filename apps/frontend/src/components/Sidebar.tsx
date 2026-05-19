@@ -376,7 +376,7 @@ export default function Sidebar({
 						<>
 							<div className="flex-1 min-w-0 px-2 lg:px-4">
 								<span className="text-xl font-bold tracking-tight text-foreground">
-									Scalebiz
+									Closing AI
 								</span>
 							</div>
 							{/* Mobile Close Button */}
@@ -393,7 +393,7 @@ export default function Sidebar({
 							className={`relative flex w-full items-center ${isCompact ? 'justify-center' : 'justify-start pl-2'}`}
 						>
 							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-orange-400 text-lg font-bold text-primary-foreground shadow-sm">
-								S
+								C
 							</div>
 							<button
 								type="button"
@@ -479,7 +479,7 @@ export default function Sidebar({
 					</button>
 					{!isCompact && (
 						<div className="mt-3 text-center text-xs text-muted-foreground">
-							Powered by ScaleChat
+							Powered by Closing AI
 						</div>
 					)}
 				</div>
