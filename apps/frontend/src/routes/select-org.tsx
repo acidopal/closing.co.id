@@ -57,7 +57,7 @@ function SelectOrgPage() {
 		return (
 			<div className="flex min-h-svh w-full items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
 				<div className="text-center">
-					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
 					<p className="mt-4 text-gray-600">Loading organizations...</p>
 				</div>
 			</div>
@@ -68,7 +68,7 @@ function SelectOrgPage() {
 		<div className="flex min-h-svh w-full items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5 p-4">
 			<div className="w-full max-w-md space-y-6">
 				<div className="text-center">
-					<div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gray-900 text-white shadow-md mx-auto">
+					<div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-brand-blue text-white shadow-md mx-auto">
 						<Building2 className="h-8 w-8" />
 					</div>
 					<h1 className="mt-4 text-2xl font-bold text-gray-900">Select Organization</h1>
@@ -86,7 +86,7 @@ function SelectOrgPage() {
 								{org.logo ? (
 									<img src={org.logo} alt={org.name} className="h-12 w-12 rounded-lg object-cover" />
 								) : (
-									<div className="h-12 w-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">{org.name.charAt(0).toUpperCase()}</div>
+									<div className="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-brand-blue flex items-center justify-center text-white font-bold text-lg">{org.name.charAt(0).toUpperCase()}</div>
 								)}
 							</div>
 							<div className="flex-1 min-w-0">

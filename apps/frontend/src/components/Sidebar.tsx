@@ -392,7 +392,7 @@ export default function Sidebar({
 						<div
 							className={`relative flex w-full items-center ${isCompact ? 'justify-center' : 'justify-start pl-2'}`}
 						>
-							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-orange-400 text-lg font-bold text-primary-foreground shadow-sm">
+							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-brand-blue text-lg font-bold text-primary-foreground shadow-sm">
 								C
 							</div>
 							<button

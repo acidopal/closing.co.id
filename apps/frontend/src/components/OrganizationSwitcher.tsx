@@ -87,7 +87,7 @@ export default function OrganizationSwitcher({
 				className={`flex w-full items-center gap-3 rounded-lg border border-border bg-background/80 px-2.5 py-2 transition-colors hover:bg-muted ${isCollapsed ? 'justify-center px-2' : ''}`}
 				title={activeOrg?.name || 'Organization'}
 			>
-				<div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-cyan-500 text-white flex items-center justify-center text-xs font-semibold">
+				<div className="h-8 w-8 rounded-md bg-gradient-to-br from-primary to-brand-blue text-white flex items-center justify-center text-xs font-semibold">
 					{initials}
 				</div>
 				{!isCollapsed && (
@@ -127,7 +127,7 @@ export default function OrganizationSwitcher({
 									disabled={switching}
 									className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors hover:bg-muted"
 								>
-									<div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-primary to-orange-400 text-xs font-semibold text-primary-foreground">
+									<div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-primary to-brand-blue text-xs font-semibold text-primary-foreground">
 										{org.name.slice(0, 1).toUpperCase()}
 									</div>
 									<div className="min-w-0 flex-1">

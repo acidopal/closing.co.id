@@ -98,8 +98,8 @@ function LoginPage() {
 			<div className="mx-auto w-full max-w-md space-y-8 px-4 py-12 sm:px-6 lg:px-8">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col items-center gap-2 text-center">
-						<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900 text-white shadow-md">
-							<span className="text-2xl font-bold">🚀</span>
+						<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-brand-blue text-white shadow-md">
+							<span className="text-2xl font-bold">C</span>
 						</div>
 						<div>
 							<h1 className="text-2xl font-bold text-gray-900">Closing AI</h1>
@@ -174,7 +174,7 @@ function LoginPage() {
 									</Field>
 
 									<Field>
-										<FieldDescription className="rounded-md border border-amber-200/50 bg-amber-50/50 px-3 py-2 text-center text-amber-700 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-400">
+										<FieldDescription className="rounded-md border border-primary/20 bg-primary/10 px-3 py-2 text-center text-brand-navy dark:text-brand-cloud">
 											💡 Login issues? Try Ctrl+Shift+R (hard refresh) or clear
 											browser cache/storage.
 										</FieldDescription>
@@ -208,7 +208,7 @@ function LoginPage() {
 							Don't have an account?{' '}
 							<Link
 								to="/register"
-								className="text-gray-900 hover:underline font-medium"
+								className="font-medium text-primary hover:underline"
 							>
 								Sign up
 							</Link>

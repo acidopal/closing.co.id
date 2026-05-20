@@ -55,7 +55,7 @@ function CreateOrgPage() {
 		<div className="flex min-h-svh w-full items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5 p-4">
 			<div className="w-full max-w-md space-y-6">
 				<div className="text-center">
-					<div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gray-900 text-white shadow-md mx-auto">
+					<div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-brand-blue text-white shadow-md mx-auto">
 						<Building2 className="h-8 w-8" />
 					</div>
 					<h1 className="mt-4 text-2xl font-bold text-gray-900">Create Organization</h1>
@@ -66,19 +66,19 @@ function CreateOrgPage() {
 					<div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-4">
 						<div className="space-y-2">
 							<label htmlFor="org-name" className="text-sm font-medium text-gray-900">Organization Name</label>
-							<input id="org-name" type="text" placeholder="Acme Inc." value={name} onChange={(e) => handleNameChange(e.target.value)} className="w-full h-11 px-3 rounded-md border border-gray-200 bg-transparent text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2" required />
+							<input id="org-name" type="text" placeholder="Acme Inc." value={name} onChange={(e) => handleNameChange(e.target.value)} className="w-full h-11 px-3 rounded-md border border-gray-200 bg-transparent text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2" required />
 						</div>
 						<div className="space-y-2">
 							<label htmlFor="org-slug" className="text-sm font-medium text-gray-900">URL Slug</label>
 							<div className="flex items-center">
 								<span className="text-gray-500 text-sm mr-2">/</span>
-								<input id="org-slug" type="text" placeholder="acme-inc" value={slug} onChange={(e) => setSlug(generateSlug(e.target.value))} className="flex-1 h-11 px-3 rounded-md border border-gray-200 bg-transparent text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2" required />
+								<input id="org-slug" type="text" placeholder="acme-inc" value={slug} onChange={(e) => setSlug(generateSlug(e.target.value))} className="flex-1 h-11 px-3 rounded-md border border-gray-200 bg-transparent text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2" required />
 							</div>
 						</div>
 						{error && <div className="rounded-md bg-red-50 p-3 text-sm text-red-500 border border-red-200">{error}</div>}
 					</div>
 
-					<button type="submit" disabled={loading || !name.trim() || !slug.trim()} className="w-full flex items-center justify-center gap-2 h-11 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+					<button type="submit" disabled={loading || !name.trim() || !slug.trim()} className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
 						{loading ? <>Creating...⏳</> : <>Create Organization<ArrowRight className="h-4 w-4" /></>}
 					</button>
 				</form>
